@@ -1,0 +1,94 @@
+#include <iostream>
+class FiguraGeometrica {
+protected:
+    virtual double calcularArea() = 0;
+
+public:
+    virtual void imprimirAtributos() = 0;
+    virtual ~FiguraGeometrica() {}
+};
+
+class Triangulo : public FiguraGeometrica {
+private:
+    double base;
+    double altura;
+
+protected:
+    double calcularArea() override {
+        return (base * altura) / 2;
+    }
+
+public:
+    Triangulo(double b, double a) : base(b), altura(a) {}
+
+    void imprimirAtributos() override {
+        std::cout << "---" << std::endl;
+        std::cout << "Figura: Triángulo" << std::endl;
+        std::cout << "Base: " << base << std::endl;
+        std::cout << "Altura: " << altura << std::endl;
+        std::cout << "Área: " << calcularArea() << std::endl;
+    }
+};
+
+class Circulo : public FiguraGeometrica {
+private:
+    double radio;
+    // Usamos la aproximación 355.0 / 113.0 para Pi
+    static constexpr double PI_APROX = 355.0 / 113.0; 
+
+protected:
+    double calcularArea() override {
+        return PI_APROX * radio * radio;
+    }
+
+public:
+    Circulo(double r) : radio(r) {}
+
+    void imprimirAtributos() override {
+        std::cout << "---" << std::endl;
+        std::cout << "Figura: Círculo" << std::endl;
+        std::cout << "Radio: " << radio << std::endl;
+        std::cout << "Área: " << calcularArea() << std::endl;
+    }
+};
+
+class Cuadrado : public FiguraGeometrica {
+private:
+    double lado;
+
+protected:
+    double calcularArea() override {
+        return lado * lado;
+    }
+
+public:
+    Cuadrado(double l) : lado(l) {}
+
+    void imprimirAtributos() override {
+        std::cout << "---" << std::endl;
+        std::cout << "Figura: Cuadrado" << std::endl;
+        std::cout << "Lado: " << lado << std::endl;
+        std::cout << "Área: " << calcularArea() << std::endl;
+    }
+};
+
+int main() {
+    Triangulo miTriangulo(10.0, 5.0);
+    Circulo miCirculo(7.0);
+    Cuadrado miCuadrado(6.0);
+
+    miTriangulo.imprimirAtributos();
+    miCirculo.imprimirAtributos();
+    miCuadrado.imprimirAtributos();
+
+    FiguraGeometrica* figura1 = &miTriangulo;
+    FiguraGeometrica* figura2 = &miCirculo;
+    FiguraGeometrica* figura3 = &miCuadrado;
+
+    std::cout << "\n--- Usando punteros a la clase base ---" << std::endl;
+    figura1->imprimirAtributos();
+    figura2->imprimirAtributos();
+    figura3->imprimirAtributos();
+
+    return 0;
+}
